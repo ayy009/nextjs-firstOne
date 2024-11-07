@@ -1,5 +1,5 @@
 "use client"
-import AlertError from '@/components/Alerts/AlertError';
+
 import axios from 'axios';
 import { cookies } from 'next/headers';
 import { useRouter } from 'next/navigation';
@@ -90,7 +90,7 @@ function LoginForm() {
   return (
     <div className="flex flex-col min-h-screen items-center justify-center px-6 py-12 lg:px-8">
         
-      {  error===true ? <AlertError  /> :""}
+      
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
         <img
           className="mx-auto h-10 w-auto"

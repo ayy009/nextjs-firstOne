@@ -18,11 +18,7 @@ export default function TableServers() {
       endContent={<ServerCog/>}
       >Add Server To Change IP</Button>
       
-      {/* <Button 
-      size='sm' 
-      className='dark:bg-gray-800 py-5 text-gray-700 dark:text-gray-100'
-      endContent={<HardDrive/>}
-      >Add Server</Button> */}
+
 
       <AddServerModel/>
 

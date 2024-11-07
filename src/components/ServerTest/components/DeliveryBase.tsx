@@ -4,29 +4,28 @@ import React from "react"
 import { Button, ScrollShadow, Card, CardBody, CardHeader, Input } from "@nextui-org/react"
 import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, Search } from "lucide-react"
 
-export default function DeliveryBase({ data }: any) {
+export default function DeliveryBase({ data }: { data: Array<{ value: string; label: string }> }) {
   const [leftItems, setLeftItems] = React.useState(data)
-  const [rightItems, setRightItems] = React.useState<any[]>([])
-  const [selectedLeft, setSelectedLeft] = React.useState<any[]>([])
-  const [selectedRight, setSelectedRight] = React.useState<any[]>([])
+  const [rightItems, setRightItems] = React.useState<Array<{ value: string; label: string }>>([])
+  const [selectedLeft, setSelectedLeft] = React.useState<Array<{ value: string; label: string }>>([])
+  const [selectedRight, setSelectedRight] = React.useState<Array<{ value: string; label: string }>>([])
   const [leftSearch, setLeftSearch] = React.useState("")
   const [rightSearch, setRightSearch] = React.useState("")
 
-  const filteredLeftItems = leftItems.filter((item: any) =>
+  const filteredLeftItems = leftItems.filter((item) =>
     `${item.value} - ${item.label}`.toLowerCase().includes(leftSearch.toLowerCase())
   )
   
-  const filteredRightItems = rightItems.filter((item: any) =>
+  const filteredRightItems = rightItems.filter((item) =>
     `${item.value} - ${item.label}`.toLowerCase().includes(rightSearch.toLowerCase())
   )
-  
 
   React.useEffect(() => {
     console.log("Available Items:", leftItems)
     console.log("Selected Items:", rightItems)
   }, [leftItems, rightItems])
 
-  const handleSelect = (item: any, side: "left" | "right") => {
+  const handleSelect = (item: { value: string; label: string }, side: "left" | "right") => {
     if (side === "left") {
       setSelectedLeft((prev) =>
         prev.includes(item) ? prev.filter((i) => i !== item) : [...prev, item]
@@ -40,9 +39,9 @@ export default function DeliveryBase({ data }: any) {
     }
   }
 
-  const handleDoubleClick = (item: any, from: "left" | "right") => {
+  const handleDoubleClick = (item: { value: string; label: string }, from: "left" | "right") => {
     if (from === "left") {
-      setLeftItems(leftItems.filter((i:any) => i !== item))
+      setLeftItems(leftItems.filter((i) => i !== item))
       setRightItems([...rightItems, item])
     } else {
       setRightItems(rightItems.filter((i) => i !== item))
@@ -55,7 +54,7 @@ export default function DeliveryBase({ data }: any) {
   const moveSelected = (direction: "right" | "left") => {
     if (direction === "right" && selectedLeft.length) {
       setRightItems([...rightItems, ...selectedLeft])
-      setLeftItems(leftItems.filter((item:any) => !selectedLeft.includes(item)))
+      setLeftItems(leftItems.filter((item) => !selectedLeft.includes(item)))
       setSelectedLeft([])
     } else if (direction === "left" && selectedRight.length) {
       setLeftItems([...leftItems, ...selectedRight])
@@ -66,11 +65,11 @@ export default function DeliveryBase({ data }: any) {
 
   const moveAll = (direction: "right" | "left") => {
     if (direction === "right") {
-      setRightItems([...rightItems, ...leftItems])
-      setLeftItems([])
+      setRightItems([...rightItems, ...filteredLeftItems])
+      setLeftItems(leftItems.filter((item) => !filteredLeftItems.includes(item)))
     } else {
-      setLeftItems([...leftItems, ...rightItems])
-      setRightItems([])
+      setLeftItems([...leftItems, ...filteredRightItems])
+      setRightItems(rightItems.filter((item) => !filteredRightItems.includes(item)))
     }
     setSelectedLeft([])
     setSelectedRight([])
@@ -82,7 +81,7 @@ export default function DeliveryBase({ data }: any) {
         <Card className="flex-1 dark:bg-slate-950">
           <CardHeader className="flex justify-around">
             <h2 className="text-lg font-semibold">Available Items</h2>
-            <p>Available: {leftItems.length}</p>
+            <p>Available: {filteredLeftItems.length}</p>
           </CardHeader>
           <CardBody>
             <Input
@@ -93,9 +92,9 @@ export default function DeliveryBase({ data }: any) {
               className="mb-4"
             />
             <ScrollShadow className="h-[300px]">
-              {filteredLeftItems.map((item:any) => (
+              {filteredLeftItems.map((item) => (
                 <div
-                  key={item.value} // Use item.value for the key
+                  key={item.value}
                   onClick={() => handleSelect(item, "left")}
                   onDoubleClick={() => handleDoubleClick(item, "left")}
                   className={`p-2 cursor-pointer rounded-md transition-colors ${
@@ -104,7 +103,7 @@ export default function DeliveryBase({ data }: any) {
                       : "hover:bg-default-100"
                   }`}
                 >
-                  {item.value} - {item.label} {/* Display value - label */}
+                  {item.value} - {item.label}
                 </div>
               ))}
             </ScrollShadow>
@@ -116,7 +115,7 @@ export default function DeliveryBase({ data }: any) {
             color="primary"
             variant="solid"
             onPress={() => moveAll("right")}
-            isDisabled={leftItems.length === 0}
+            isDisabled={filteredLeftItems.length === 0}
             aria-label="Move all to right"
           >
             <ChevronsRight className="h-4 w-4" />
@@ -146,7 +145,7 @@ export default function DeliveryBase({ data }: any) {
             isIconOnly
             variant="solid"
             onPress={() => moveAll("left")}
-            isDisabled={rightItems.length === 0}
+            isDisabled={filteredRightItems.length === 0}
             aria-label="Move all to left"
           >
             <ChevronsLeft className="h-4 w-4" />
@@ -155,7 +154,7 @@ export default function DeliveryBase({ data }: any) {
         <Card className="flex-1 dark:bg-slate-950">
           <CardHeader className="flex justify-around">
             <h2 className="text-lg font-semibold">Selected Items</h2>
-            <p>Selected: {rightItems.length}</p>
+            <p>Selected: {filteredRightItems.length}</p>
           </CardHeader>
           <CardBody>
             <Input
@@ -168,7 +167,7 @@ export default function DeliveryBase({ data }: any) {
             <ScrollShadow className="h-[300px]">
               {filteredRightItems.map((item) => (
                 <div
-                  key={item.value} // Use item.value for the key
+                  key={item.value}
                   onClick={() => handleSelect(item, "right")}
                   onDoubleClick={() => handleDoubleClick(item, "right")}
                   className={`p-2 cursor-pointer rounded-md transition-colors ${
@@ -177,7 +176,7 @@ export default function DeliveryBase({ data }: any) {
                       : "hover:bg-default-100"
                   }`}
                 >
-                  {item.value} - {item.label} {/* Display value - label */}
+                  {item.value} - {item.label}
                 </div>
               ))}
             </ScrollShadow>
