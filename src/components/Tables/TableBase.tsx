@@ -14,21 +14,18 @@ import {
   DropdownMenu,
   DropdownItem,
   Chip,
-  User,
   Pagination,
   Selection,
   ChipProps,
   SortDescriptor,
-  ButtonGroup,
 } from "@nextui-org/react";
 
-import DataStatsTwo from "@/components/DataStats/DataStatsTwo";
 import { VerticalDotsIcon } from "./vector/VerticalDotsIcon";
 import { ChevronDownIcon } from "./vector/ChevronDownIcon";
 import { SearchIcon } from "./vector/SearchIcon";
 // import {columns, users, statusOptions,INITIAL_VISIBLE_COLUMNS} from "./data";
 import { capitalize } from "./utils";
-import SwitchSelect from "./TableComponents/Switch";
+
 import ActionsDropDown from "../Dropdowns/ActionsDropDown";
 
 const statusColorMap: Record<string, ChipProps["color"]> = {
@@ -157,11 +154,23 @@ export default function TableBase({
           </Chip>
         );
 
+        case "project_type":
+          return (
+            <Chip
+              className="select-all capitalize"
+              color={user.type == "pro" ? "secondary" : "primary"}
+              size="sm"
+              variant="flat"
+            >
+              {cellValue}
+            </Chip>
+          );
+
         case "project":
           return (
             <Chip
               className="select-all capitalize"
-              color={user.project == "VPS" ? "secondary" : "primary"}
+              color={user.project == "vps" ? "secondary" : "primary"}
               size="sm"
               variant="flat"
             >
@@ -173,11 +182,11 @@ export default function TableBase({
         return (
           <Chip
             className="capitalize"
-            color={user.is_proxy ? "success" : "danger"}
+            color={user.is_proxy=="yes" ? "success" : "danger"}
             size="sm"
             variant="dot"
           >
-            {user.is_proxy ? "yes" : "no"}
+            {user.is_proxy}
           </Chip>
         );
 
@@ -302,14 +311,6 @@ export default function TableBase({
       <div className="-mb-3 flex flex-col   gap-4 rounded-sm bg-white  px-6 py-2  text-dark dark:bg-gray-dark  dark:text-white  ">
         <div className=" items-end justify-between gap-3  ">
 
-          {tableName == "Dashbord Table" && 
-          <>
-                    <h2 className="p-3 text-xl font-extrabold   underline dark:text-white">
-                    {tableName}
-                  </h2>
-          <DataStatsTwo /> 
-          </>}
-
           <div className="flex flex-col items-center md:flex-row  md:justify-between ">
             <Input
               isClearable
@@ -418,27 +419,7 @@ export default function TableBase({
       <div className=" -mt-3 flex items-center justify-center rounded-sm bg-white p-6 px-2 py-6  text-dark  dark:bg-gray-dark dark:text-white sm:justify-between">
         <div className="hidden w-1/3 justify-start  sm:flex">
           <span className="px-4 text-small  text-dark dark:text-white">
-            {/* <SwitchSelect selectSwitch={selectSwitch} setselectSwitch={setselectSwitch}/><br/> */}
 
-            {/* group button  */}
-
-            {/* <ButtonGroup>
-<Button onClick={() => {
-        const allNames = filteredItems.map(item => item.name).join('\n');
-        navigator.clipboard.writeText(allNames);
-      }}>Copy</Button>
-<Button
-onClick={() => {
-const formattedData = filteredItems.map(item => {
-// Get all values from the item object
-return Object.values(item).join('\t');
-}).join('\n');
-
-navigator.clipboard.writeText(formattedData);
-}}
->Copy All</Button>
-<Button>Deselect All</Button>
-</ButtonGroup> */}
 
             <span className=" text-small text-dark  dark:text-white">
               Total {dataTable.length} users{" "}

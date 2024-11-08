@@ -14,7 +14,7 @@
       { name: "OS Installed", uid: "os_installed", sortable: true },
       { name: "Move Server", uid: "move_server", sortable: true },
       { name: "Project Name", uid: "project_name", sortable: true },
-      { name: "Email Account", uid: "email_account", sortable: true },
+      { name: "Email", uid: "email", sortable: true },
       { name: "Status", uid: "status", sortable: true },
       { name: "Project Type", uid: "project_type", sortable: true },
       { name: "Actions", uid: "actions"},
@@ -112,7 +112,7 @@ const tableName="Dashbord Table"
       "os_installed",
       "move_server",
       "project_name",
-      "email_account",
+      "email",
       "status",
       "project_type",
       

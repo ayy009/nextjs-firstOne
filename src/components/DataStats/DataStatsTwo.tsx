@@ -8,22 +8,22 @@ interface Metric {
   icon : any
 }
 
-export default function dataStatsTwo() {
+export default function dataStatsTwo({data}:any) {
   const metrics: Metric[] = [
     {
       title: "Server Active",
-      value: "1105",
+      value: data.nbrActiveServers,
       icon:<ServerCog className="h-10 w-10 text-lime-500"/>
     },
     {
       title: "Server InActive",
-      value: "32",
+      value: data.nbrInactiveServers,
 
       icon:<ServerCrash className="h-10 w-10 text-amber-500"/>
     },
     {
       title: "Server Retumed",
-      value: "3306",
+      value: data.nbrReturnedServers,
       icon :<ServerOff className="h-10 w-10 text-red-500" />
       
     },
