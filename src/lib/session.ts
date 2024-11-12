@@ -33,3 +33,21 @@ export async function deleteSession() {
   // Return a success message
   return { message: 'Session deleted successfully' };
 }
+
+
+export async function checkSession() {
+  const cookieStore = cookies()
+  const sessionToken = cookieStore.get("Authorization")
+
+  if (!sessionToken) return null
+
+  // Validate session token if needed
+  const isValid = await validateToken(sessionToken.value) // Custom validation function
+
+  return isValid ? { user: { name: "User" } } : null // Return session data if valid
+}
+
+async function validateToken(token: string) {
+  // Add logic to validate token (e.g., call your backend API to verify)
+  return token === "valid-token" // Replace with actual validation logic
+}

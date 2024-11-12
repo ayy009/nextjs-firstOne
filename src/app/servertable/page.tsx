@@ -5,17 +5,11 @@ import React from 'react'
 function page() {
   return (
     <div>
-           <DefaultLayout>
 
 <div >
 <TableServers/>
 
 </div>
-
-    
-
-
-</DefaultLayout>
     </div>
   )
 }

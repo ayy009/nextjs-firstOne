@@ -16,13 +16,6 @@ export async function middleware(request: NextRequest) {
   if (!cookie) {
     return NextResponse.redirect(new URL("/auth", request.url));
   }else{
-  //   cookies().set("Authorization", cookie.value, {
-  //     secure: true,
-  //     httpOnly: true,
-  //     expires: new Date(Date.now() + 60 * 60 * 1000),
-  //     path: "/",
-  //     sameSite: "strict",
-  // });
   updateSession();
   }
 

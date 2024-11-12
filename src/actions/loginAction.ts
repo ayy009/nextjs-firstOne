@@ -1,79 +1,52 @@
 "use server";
 
-import users from "@/types/user";
 import axios from "axios";
 import { cookies } from "next/headers";
-import { NextResponse } from 'next/server'; 
-import { SignJWT } from "jose"; 
-
-// Validate email format
-// function validateEmail(email: string) {
-//     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-//     return regex.test(email);
-// }
-
-
+import { SignJWT } from "jose";
 
 // Define the login credentials interface
 interface LoginCredentials {
-    email: string;
-    password: string;
+  email: string;
+  password: string;
 }
-
-
 
 // Main login action function
 export default async function loginAction({ email, password }: LoginCredentials) {
-    // Validate data
-    // if (!validateEmail(email) ) {
-    //     return NextResponse.json(
-    //         { error: "Invalid email or password" },
-    //         { status: 400 }
-    //     );
-    // }
+  try {
+    // Send a POST request to the external API with login credentials
+    const response = await axios.post(
+      `http://manageservers.lwebl3ami9.store/api/login?email=${email}&password=${password}`
+    );
 
-    // Find the user by email and password
-    const user = users.find((user) => user.email === email && user.password === password);
-    console.log(user)
+    const { success, message, user_api_key } = response.data;
+    console.log(response.data);
 
-    if (!user) {
-
-        return {error: 'Invalid email or password', status: 400}
-        
+    // Check if login was successful
+    if (!success) {
+      return { error: message || "Invalid email or password", status: 400 };
     }
 
-    try {
+    // Create a JWT using the user API key
+    const token = await new SignJWT({ email, user_api_key })
+      .setProtectedHeader({ alg: "HS256" })
+      .setExpirationTime("1h")
+      .sign(new TextEncoder().encode(process.env.JWT_SECRET!));
 
-        const token = await new SignJWT({ email: user.email, id: user.name }) // Create the JWT with the payload
-        .setProtectedHeader({ alg: 'HS256' }) // Set the algorithm for the JWT
-        .setExpirationTime('1h') // Set the expiration time
-        .sign(new TextEncoder().encode(process.env.JWT_SECRET));
+    // Set the JWT as an HTTP-only cookie
+    cookies().set("Authorization", token, {
+      secure: true,
+      httpOnly: true,
+      expires: new Date(Date.now() + 60 * 60 * 1000),
+      path: "/",
+      sameSite: "strict",
+    });
+    // cookies().set("user_api_key",user_api_key);
+    // cookies().set("email",email);
 
-
-  
-        if (token) {
-            cookies().set("Authorization", token, {
-                secure: true,
-                httpOnly: true,
-                expires: new Date(Date.now() + 60 * 60 * 1000),
-                path: "/",
-                sameSite: "strict",
-            });
-
-
-            return { message: "Login successful!",status: 200 } 
-            
-            
-
-        }
-    } catch (error) {
-        console.error("An error occurred during login:", error);
-        return NextResponse.json(
-            { error: "An error occurred during login." },
-            { status: 500 }
-        );
-    }
-
-
-    
+    // Return the essential data to the client
+    return { message: "Login successful!", status: 200};
+  } catch (error) {
+    console.error("An error occurred during login:", error);
+    return { error: "An error occurred during login.", status: 500 };
+  }
 }

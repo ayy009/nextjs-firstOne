@@ -33,6 +33,11 @@
 } 
 
       /* _________________________________________________no scrollbar_____________________________________________________________ */
+
+
+
+
+
     /* Chrome, Safari and Opera */
     .no-scrollbar::-webkit-scrollbar {
         display: none;

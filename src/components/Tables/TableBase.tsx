@@ -65,7 +65,7 @@ export default function TableBase({
 
   //------------------------------------------------------select State
 
-  const [selectSwitch, setselectSwitch] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(true);
 
   const hasSearchFilter = Boolean(filterValue);
 
@@ -110,6 +110,7 @@ export default function TableBase({
   }, [page, filteredItems, rowsPerPage]);
 
   const sortedItems = React.useMemo(() => {
+    
     return [...items].sort((a: User, b: User) => {
       const first = a[sortDescriptor.column as keyof User] as number;
       const second = b[sortDescriptor.column as keyof User] as number;
@@ -123,24 +124,6 @@ export default function TableBase({
     const cellValue = user[columnKey as keyof User];
 
     switch (columnKey) {
-      // case "name":
-      //   return (
-      //     <User
-      //       avatarProps={{radius: "lg", src: user.avatar}}
-      //       description={user.email}
-      //       name={cellValue}
-      //     >
-      //       {user.email}
-      //     </User>
-      //   );
-      // case "type":
-      //   return (
-      //     <div className="flex flex-col">
-      //       <p className="text-bold text-small capitalize">{cellValue}</p>
-      //       <p className="text-bold text-tiny capitalize text-default-400">{user.status}</p>
-      //     </div>
-      //   );
-
       // type dashbord
       case "type":
         return (
@@ -164,6 +147,33 @@ export default function TableBase({
             >
               {cellValue}
             </Chip>
+          );
+
+          case "days_left":
+            const returnDate = new Date(user.return_date);
+            const today = new Date();
+            const diffTime = returnDate.getTime() - today.getTime();
+            const daysLeft = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); // Converts the difference to days
+          
+            return (
+              <>
+                {daysLeft > 0 ? `${daysLeft} days left` : "Expired"}
+                {/* {daysLeft} */}
+              </>
+            );
+
+            
+        case 'move_server':
+          return (
+            <Chip
+            className="select-all capitalize"
+            color={user.keep_status ? "secondary" : "primary"}
+            size="sm"
+            variant="flat"
+          >
+            {user.keep_status ? "Used" : "Free"}
+          </Chip>
+        
           );
 
         case "project":
@@ -272,17 +282,17 @@ export default function TableBase({
     }
   }, []);
 
-  const onNextPage = React.useCallback(() => {
-    if (page < pages) {
-      setPage(page + 1);
-    }
-  }, [page, pages]);
+  // const onNextPage = React.useCallback(() => {
+  //   if (page < pages) {
+  //     setPage(page + 1);
+  //   }
+  // }, [page, pages]);
 
-  const onPreviousPage = React.useCallback(() => {
-    if (page > 1) {
-      setPage(page - 1);
-    }
-  }, [page]);
+  // const onPreviousPage = React.useCallback(() => {
+  //   if (page > 1) {
+  //     setPage(page - 1);
+  //   }
+  // }, [page]);
 
   const onRowsPerPageChange = React.useCallback(
     (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -467,19 +477,14 @@ export default function TableBase({
             total={pages}
             onChange={setPage}
           />
-          {/* <Button isDisabled={pages === 1} size="sm" variant="flat" onPress={onPreviousPage}>
-            Previous
-          </Button>
-          
-          <Button isDisabled={pages === 1} size="sm" variant="flat" onPress={onNextPage}>
-            Next
-          </Button> */}
         </div>
       </div>
     );
   }, [selectedKeys, items.length, page, pages, hasSearchFilter]);
 
+
   return (
+    
     <Table
       aria-label="Example table with custom cells, pagination and sorting"
       isHeaderSticky
@@ -510,15 +515,24 @@ export default function TableBase({
             key={column.uid}
             align="center"
             allowsSorting={column.sortable}
+            
           >
             {column.name}
           </TableColumn>
         )}
       </TableHeader>
-      <TableBody emptyContent={"No users found"} items={sortedItems}>
+      <TableBody 
+      // isLoading={isLoading}
+      // loadingContent={<Spinner label="Loading..." />}
+      emptyContent={"No users found"} 
+      
+      items={sortedItems}>
+        
         {(item) => (
           <TableRow key={item.id}>
-            {(columnKey) => (
+            {
+            
+            (columnKey) => (
               <TableCell>{renderCell(item, columnKey)}</TableCell>
             )}
           </TableRow>

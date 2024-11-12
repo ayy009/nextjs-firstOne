@@ -9,10 +9,10 @@ export const metadata: Metadata = {
 
 const TablesPage = () => {
   return (
-    <DefaultLayout>
+
 
         <TableServerInterfaces/>
-    </DefaultLayout>
+
   );
 };
 

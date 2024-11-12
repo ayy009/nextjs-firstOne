@@ -1,7 +1,5 @@
 "use client"
 
-import axios from 'axios';
-import { cookies } from 'next/headers';
 import { useRouter } from 'next/navigation';
 import loginAction from "@/actions/loginAction"
 
@@ -20,10 +18,6 @@ function LoginForm() {
   const [errorMessage,setErrorMessage]= useState('');
 
 
-  // if(cookies().get(Authorization)){
-
-  // }
-
 
 
 
@@ -33,13 +27,16 @@ function LoginForm() {
     try {
       const result = await loginAction({ email, password });
 
+
       
        console.log(result)
             if (result?.status === 200) {
-        
+
+
+
         console.log('Login successful!!!!!!!!!!!!!!!!!!');
         toast.success('Login successful!!!!!!!!!!!!!!!!!!',{duration: 2000});
-        router.push('/');
+        router.push('/dashbord');
 
             }else{
       toast.error("Invalid email or password",{duration: 2000})
@@ -50,7 +47,7 @@ function LoginForm() {
     } catch (error) {
       setError(true); 
       
-      // toast.error('Invalid email or password',{duration: 4000})
+      toast.error('Invalid email or password',{duration: 4000})
       console.log("eeeeeeeeeeeeeeeeee")
     }
   };
@@ -97,7 +94,7 @@ function LoginForm() {
           src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=600"
           alt="Your Company"
         />
-        <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+        <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900 dark:text-white">
           Sign in to your account
         </h2>
       </div>
@@ -105,7 +102,7 @@ function LoginForm() {
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
         <form className="space-y-6" onSubmit={handleLogin}>
           <div>
-            <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
+            <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900 dark:text-white">
               Email address
             </label>
             <div className="mt-2">
@@ -124,7 +121,7 @@ function LoginForm() {
 
           <div>
             <div className="flex items-center justify-between">
-              <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
+              <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900 dark:text-white">
                 Password
               </label>
               <div className="text-sm">
