@@ -7,21 +7,19 @@ import { getUserApiKey } from '@/lib/ApiKey'
 
 interface Props {
   searchParams: {
-    [key: string]: string | string[] | undefined
+    [key: string]: string | string[] 
   }
 }
 
-export async function Dashboard({ searchParams }: Props) {
+// Changed to async arrow function and default export
+const Dashboard = async ({ searchParams }: Props) => {
   console.log(searchParams);
   const userApiKey = await getUserApiKey(); 
 
   const statusQuery = searchParams?.status ? `?status=${searchParams.status}` : ''
 
-
   const ApiUrl1 = `http://manageservers.lwebl3ami9.store/api/Servers?api_key=${userApiKey}${statusQuery}`
   const ApiUrl2 = `http://manageservers.lwebl3ami9.store/api/Servers?api_key=${userApiKey}`
-  // console.log(ApiUrl1)
-
 
   const { data } = await axios.post(ApiUrl2)
   
@@ -52,4 +50,5 @@ export async function Dashboard({ searchParams }: Props) {
   )
 }
 
+// Add default export
 export default Dashboard
