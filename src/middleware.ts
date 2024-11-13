@@ -2,15 +2,19 @@
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import * as jose from "jose";
-import { redirect } from "next/navigation";
 import { updateSession } from "./lib/session";
 
 
 export async function middleware(request: NextRequest) {
   // Check for the Authorization cookie
   const cookie = cookies().get("Authorization");
-  console.log(cookie)
+
+
+  // const currentPath = request.url;
+  // console.log(currentPath=="auth")
+  // if (currentPath.startsWith('/auth') && cookie) {
+  //   return NextResponse.redirect('/dashbord')
+  // }
   
   // Redirect to the auth page if the cookie is missing
   if (!cookie) {
@@ -24,5 +28,8 @@ export async function middleware(request: NextRequest) {
 
 
 export const config = {
-  matcher: ["/"] 
+  matcher: [] 
+  // matcher: ["/"] 
+  // matcher: ["/((?!api|_next/static|_next/image|favicon.ico|login|register|auth|signin|signout|signup).*)"]
+  // 
 };

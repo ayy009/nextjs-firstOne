@@ -1,6 +1,7 @@
 import { Metadata } from "next"
 import { redirect } from "next/navigation"
 import { checkSession } from "@/lib/session" // Import your custom session check function
+import { getUserApiKey } from "@/lib/ApiKey"
 
 export const metadata: Metadata = {
   title: "All-in-one SEO tool to grow your business rapidly",
@@ -8,12 +9,11 @@ export const metadata: Metadata = {
 }
 
 export default async function Home() {
-  const session = await checkSession() // Custom session check
-
-  if (!session) {
+  const apikey = await getUserApiKey()
+  if (!apikey) {
     redirect("/auth")
   } else {
-    redirect("/dashboard")
+    redirect("/dashbord")
   }
 
   // This part will never be reached due to redirects

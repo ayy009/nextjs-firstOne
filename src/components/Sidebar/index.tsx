@@ -4,7 +4,7 @@ import React from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import { LayoutDashboard, Server, Sheet, Table2, Tickets, UserRoundPen } from 'lucide-react';
+import { LayoutDashboard, Mailbox, Server, Sheet, Table2, Tickets, UserRoundPen } from 'lucide-react';
 import SidebarItem from "@/components/Sidebar/SidebarItem";
 import ClickOutside from "@/components/ClickOutside";
 import useLocalStorage from "@/hooks/useLocalStorage";
@@ -24,7 +24,7 @@ const menuGroups = [
           <LayoutDashboard />
         ),
         label: "Dashboard",
-        route: "/",
+        route: "/dashbord",
 
       },
 
@@ -60,6 +60,14 @@ const menuGroups = [
         ),
         label: "Tickets",
         route: "/tickets",
+
+      },
+      {
+        icon: (
+          <Mailbox   />
+        ),
+        label: "PMTA Manager",
+        route: "/pmtamanager",
 
       },
 

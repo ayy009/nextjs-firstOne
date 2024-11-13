@@ -9,6 +9,7 @@ export async function getUserApiKey() {
     const { payload } = await jwtVerify(token, new TextEncoder().encode(process.env.JWT_SECRET!));
     return payload.user_api_key;
   } catch (error) {
+    
     console.error('Token verification failed:', error);
     return null;
   }

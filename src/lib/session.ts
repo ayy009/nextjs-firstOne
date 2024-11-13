@@ -37,12 +37,13 @@ export async function deleteSession() {
 
 export async function checkSession() {
   const cookieStore = cookies()
-  const sessionToken = cookieStore.get("Authorization")
+  // const sessionToken = cookieStore.get("Authorization")
+  const cookie = cookies().get("Authorization");
 
-  if (!sessionToken) return null
+  if (!cookie) return null
 
   // Validate session token if needed
-  const isValid = await validateToken(sessionToken.value) // Custom validation function
+  const isValid = await validateToken(cookie.value) // Custom validation function
 
   return isValid ? { user: { name: "User" } } : null // Return session data if valid
 }

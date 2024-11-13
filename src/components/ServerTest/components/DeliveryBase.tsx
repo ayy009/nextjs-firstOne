@@ -2,9 +2,15 @@
 
 import React from "react"
 import { Button, ScrollShadow, Card, CardBody, CardHeader, Input } from "@nextui-org/react"
-import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, Search } from "lucide-react"
+import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, Search } from 'lucide-react'
 
-export default function DeliveryBase({ data }: { data: Array<{ value: string; label: string }> }) {
+export default function DeliveryBase({ 
+  data, 
+  SetControlSetServerSelect
+}: { 
+  data: Array<{ value: string; label: string }>;
+  SetControlSetServerSelect: (items: Array<{ value: string; label: string }>) => void;
+}) {
   const [leftItems, setLeftItems] = React.useState(data)
   const [rightItems, setRightItems] = React.useState<Array<{ value: string; label: string }>>([])
   const [selectedLeft, setSelectedLeft] = React.useState<Array<{ value: string; label: string }>>([])
@@ -23,6 +29,7 @@ export default function DeliveryBase({ data }: { data: Array<{ value: string; la
   React.useEffect(() => {
     console.log("Available Items:", leftItems)
     console.log("Selected Items:", rightItems)
+    SetControlSetServerSelect(rightItems)
   }, [leftItems, rightItems])
 
   const handleSelect = (item: { value: string; label: string }, side: "left" | "right") => {
@@ -182,9 +189,6 @@ export default function DeliveryBase({ data }: { data: Array<{ value: string; la
             </ScrollShadow>
           </CardBody>
         </Card>
-      </div>
-      <div className="flex justify-between text-small">
-        {/* Additional information can be placed here */}
       </div>
     </div>
   )

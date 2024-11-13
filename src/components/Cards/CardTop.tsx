@@ -6,6 +6,7 @@ export default function CardTop({ data, index }: any) {
   return (
     <Card
       className="w-11/12  p-4 bg-white dark:bg-gray-dark"
+  
       shadow="sm"
       key={index}
     >
