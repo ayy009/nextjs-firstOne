@@ -1,5 +1,4 @@
 
-import DefaultLayout from "@/components/Layouts/DefaultLaout";
 import ServerTest from "@/components/ServerTest";
 
 

@@ -28,8 +28,8 @@ export async function middleware(request: NextRequest) {
 
 
 export const config = {
-  matcher: [] 
+  // matcher: [] 
   // matcher: ["/"] 
-  // matcher: ["/((?!api|_next/static|_next/image|favicon.ico|login|register|auth|signin|signout|signup).*)"]
+  matcher: ["/((?!api|_next/static|_next/image|favicon.ico|login|register|auth|signin|signout|signup).*)"]
   // 
 };

@@ -4,7 +4,7 @@ import React from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import { LayoutDashboard, Mailbox, Server, Sheet, Table2, Tickets, UserRoundPen } from 'lucide-react';
+import { LayoutDashboard, Mailbox, MapPinPlus, Server, Sheet, Table2, Tickets, UserRoundPen } from 'lucide-react';
 import SidebarItem from "@/components/Sidebar/SidebarItem";
 import ClickOutside from "@/components/ClickOutside";
 import useLocalStorage from "@/hooks/useLocalStorage";
@@ -68,6 +68,14 @@ const menuGroups = [
         ),
         label: "PMTA Manager",
         route: "/pmtamanager",
+
+      },
+      {
+        icon: (
+          <MapPinPlus />
+        ),
+        label: "Servers Ip Change",
+        route: "/ipchange",
 
       },
 

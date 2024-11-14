@@ -17,7 +17,7 @@ const columns = [
   const statusOptions = [
     {name: "Active", uid: "active"},
     {name: "InActive", uid: "inactive"},
-    {name: "Retumed", uid: "retumed"},
+    {name: "Retuned", uid: "retuned"},
   ];
 
 
@@ -51,7 +51,7 @@ const columns = [
     },
     {
       id: 19308, deliveryServer: "EMT_SF31812", ip: "5.183.102.141", domain: "hduzeoxzwpowgwugm.shop", ptr: "false", vmta: "pmztefubs.icu",
-      tag: "pmta-5.183.102.141", ipVersion: "IPv4", type: "original", serverStatus: "retumed", status: "active"
+      tag: "pmta-5.183.102.141", ipVersion: "IPv4", type: "original", serverStatus: "retuned", status: "active"
     },
     {
       id: 67689, deliveryServer: "C_SF56198", ip: "2605:e440:1::3:25a", domain: "lowe.emmerich.com", ptr: "true", vmta: "lowe.emmerich.com",

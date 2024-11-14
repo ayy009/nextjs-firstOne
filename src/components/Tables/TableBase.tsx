@@ -31,7 +31,7 @@ import ActionsDropDown from "../Dropdowns/ActionsDropDown";
 const statusColorMap: Record<string, ChipProps["color"]> = {
   active: "success",
   inactive: "warning",
-  retumed: "danger",
+  retuned: "danger",
 };
 
 const statusColorMap2: Record<string, ChipProps["color"]> = {
@@ -137,7 +137,7 @@ export default function TableBase({
           </Chip>
         );
 
-        case "project_type":
+      case "project_type":
           return (
             <Chip
               className="select-all capitalize"
@@ -149,7 +149,7 @@ export default function TableBase({
             </Chip>
           );
 
-          case "days_left":
+      case "days_left":
             const returnDate = new Date(user.return_date);
             const today = new Date();
             const diffTime = returnDate.getTime() - today.getTime();
@@ -161,9 +161,8 @@ export default function TableBase({
                 {/* {daysLeft} */}
               </>
             );
-
-            
-        case 'move_server':
+           
+      case 'move_server':
           return (
             <Chip
             className="select-all capitalize"
@@ -176,7 +175,7 @@ export default function TableBase({
         
           );
 
-        case "project":
+      case "project":
           return (
             <Chip
               className="select-all capitalize"
@@ -204,11 +203,12 @@ export default function TableBase({
         return (
           <Chip
             className="capitalize"
-            color={statusColorMap[user.status]}
+            color={statusColorMap2[user.status]}
             size="sm"
             variant="flat"
           >
-            {cellValue}
+            {/* {typeof(cellValue)===Boolean ? cellValue==true ? "True" : "False":cellValue} */}
+            {typeof(cellValue) === 'boolean' ? cellValue === true ? "True" : "False" : cellValue}
           </Chip>
         );
 
@@ -233,6 +233,18 @@ export default function TableBase({
             variant="flat"
           >
             {cellValue}
+          </Chip>
+        );
+
+      case "pending":
+        return (
+          <Chip
+            className="capitalize"
+            color={statusColorMap2[user.pending]}
+            size="sm"
+            variant="flat"
+          >
+            {user.pending ? "True" : "False"}
           </Chip>
         );
 

@@ -106,13 +106,21 @@ function  LoginForm() {
     <div className="flex flex-col min-h-screen items-center justify-center px-6 py-12 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
         <img
-          className="mx-auto h-10 w-auto"
+          className="mx-auto h-10 w-auto "
           src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=600"
+          // src={"/images/logo-E-impact/logo_white.png"}
           alt="Your Company"
         />
-        <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900 dark:text-white">
+        {/* <img
+          className="mx-auto h-10 w-auto dark:block"
+          // src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=600"
+          src={"/images/logo-E-impact/logo_dark.png"}
+          alt="Your Company"
+        /> */}
+
+        <h4 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900 dark:text-white">
           Sign in to your account
-        </h2>
+        </h4>
       </div>
 
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
