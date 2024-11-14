@@ -25,6 +25,8 @@ export default function RootLayout({
   // Determine if the current path is the login page
   const isLoginPage = pathname === "/auth";
 
+  
+
   return (
     <html lang="en">
       <body suppressHydrationWarning={true}>

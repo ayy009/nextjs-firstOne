@@ -9,7 +9,7 @@ export default function DeliveryBase({
   SetControlSetServerSelect
 }: { 
   data: Array<{ value: string; label: string }>;
-  SetControlSetServerSelect: (items: Array<{ value: string; label: string }>) => void;
+  SetControlSetServerSelect?: (items: Array<{ value: string; label: string }>) => void;
 }) {
   const [leftItems, setLeftItems] = React.useState(data)
   const [rightItems, setRightItems] = React.useState<Array<{ value: string; label: string }>>([])
@@ -29,7 +29,7 @@ export default function DeliveryBase({
   React.useEffect(() => {
     console.log("Available Items:", leftItems)
     console.log("Selected Items:", rightItems)
-    SetControlSetServerSelect(rightItems)
+    if(SetControlSetServerSelect) SetControlSetServerSelect(rightItems)
   }, [leftItems, rightItems])
 
   const handleSelect = (item: { value: string; label: string }, side: "left" | "right") => {
@@ -125,7 +125,7 @@ export default function DeliveryBase({
             isDisabled={filteredLeftItems.length === 0}
             aria-label="Move all to right"
           >
-            <ChevronsRight className="h-4 w-4" />
+            <ChevronsRight className="h-4 w-4 rotate-90 md:rotate-0" />
           </Button>
           <Button
             color="primary"
@@ -135,7 +135,7 @@ export default function DeliveryBase({
             isDisabled={selectedLeft.length === 0}
             aria-label="Move selected to right"
           >
-            <ChevronRight className="h-4 w-4" />
+            <ChevronRight className="h-4 w-4 rotate-90 md:rotate-0" />
           </Button>
           <Button
             color="primary"
@@ -145,7 +145,7 @@ export default function DeliveryBase({
             isDisabled={selectedRight.length === 0}
             aria-label="Move selected to left"
           >
-            <ChevronLeft className="h-4 w-4" />
+            <ChevronLeft className="h-4 w-4 rotate-90 md:rotate-0" />
           </Button>
           <Button
             color="primary"
@@ -155,7 +155,7 @@ export default function DeliveryBase({
             isDisabled={filteredRightItems.length === 0}
             aria-label="Move all to left"
           >
-            <ChevronsLeft className="h-4 w-4" />
+            <ChevronsLeft className="h-4 w-4 rotate-90 md:rotate-0" />
           </Button>
         </div>
         <Card className="flex-1 dark:bg-slate-950">

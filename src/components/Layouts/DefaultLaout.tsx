@@ -1,9 +1,11 @@
 "use client";
-import React, { useState, ReactNode } from "react";
+import React, { useState, ReactNode, useEffect } from "react";
 import Sidebar from "@/components/Sidebar";
 import Header from "@/components/Header";
 import FooterTwo from "../Footer/FooterTwo";
 import { Toaster } from "react-hot-toast";
+import { ChevronUp } from "lucide-react";
+import { Button } from "@nextui-org/react";
 
 export default function DefaultLayout({
   children,
@@ -11,6 +13,32 @@ export default function DefaultLayout({
   children: React.ReactNode;
 }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  // btn for dcroll topPage
+
+  const [showButton, setShowButton] = useState(false)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.pageYOffset > 300) {
+        setShowButton(true)
+      } else {
+        setShowButton(false)
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+    }
+  }, [])
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    })
+  }
  
   return (
     <>
@@ -32,7 +60,17 @@ export default function DefaultLayout({
             >
               {children}
             </div>
-            
+            {showButton && (
+        <Button
+          isIconOnly
+          color="primary"
+          aria-label="Scroll to top"
+          className="fixed bottom-10 right-4 z-50 flex items-center justify-center"
+          onPress={scrollToTop}
+        >
+          <ChevronUp className="h-6 w-6" />
+        </Button>
+      )}
             
           </main>
           <FooterTwo />

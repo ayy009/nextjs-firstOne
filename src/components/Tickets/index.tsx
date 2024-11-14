@@ -1,7 +1,5 @@
 "use client"
-import { Button, Select, SelectItem } from "@nextui-org/react";
 import TicketsStatus from "./components/TicketsStatus";
-import { ServerCog, UserSearch } from "lucide-react";
 import SelectProjects from "./components/SelectProjects";
 import TableTickets from "./components/TableTickets/TableTickets";
 import TitleAndAction from "./components/TitleAndAction";
