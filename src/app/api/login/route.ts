@@ -1,4 +1,4 @@
-
+"use server"
 
 //importation
 import users from "@/types/user";

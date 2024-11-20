@@ -22,11 +22,12 @@ const Dashboard = async ({ searchParams }: Props) => {
   const ApiUrl1 = `http://manageservers.lwebl3ami9.store/api/Servers?api_key=${userApiKey}${statusQuery}`
   const ApiUrl2 = `http://manageservers.lwebl3ami9.store/api/Servers?api_key=${userApiKey}`
 
+
   
 
 
   const { data } = await axios.post(ApiUrl2)
-  
+  console.log(data)
   const dataTwo = {    
     nbrActiveServers: data.nbrActiveServers,
     nbrInactiveServers: data.nbrInactiveServers,

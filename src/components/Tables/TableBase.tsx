@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Table,
   TableHeader,
@@ -27,16 +27,26 @@ import { SearchIcon } from "./vector/SearchIcon";
 import { capitalize } from "./utils";
 
 import ActionsDropDown from "../Dropdowns/ActionsDropDown";
+// import EditServerModal from "./TableServers/components/EditServerModel";
+import { ActionsServerTable } from "./TableServers/components/ActionsServerTable";
+import { useSearchParams,useRouter } from "next/navigation";
+
 
 const statusColorMap: Record<string, ChipProps["color"]> = {
   active: "success",
   inactive: "warning",
   retuned: "danger",
+  true: "success",
+  false: "danger",
+  "1": "success",
+  "0": "danger",
 };
 
 const statusColorMap2: Record<string, ChipProps["color"]> = {
   true: "success",
   false: "danger",
+  "1": "success",
+  "0": "danger",
 };
 
 export default function TableBase({
@@ -45,6 +55,7 @@ export default function TableBase({
   statusOptions,
   INITIAL_VISIBLE_COLUMNS,
   tableName,
+  serverproviders
 }: any) {
   type User = (typeof dataTable)[0];
   const [filterValue, setFilterValue] = React.useState("");
@@ -64,8 +75,16 @@ export default function TableBase({
   const [page, setPage] = React.useState(1);
 
   //------------------------------------------------------select State
-
-  const [isLoading, setIsLoading] = React.useState(true);
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  
+  const selectedItems = searchParams.get('selectedItems')?.split(',').filter(Boolean) || [];
+  
+  useEffect(() => {
+    router.push(`${window.location.pathname}?selectedItems=${Array.from(selectedKeys).join(',')}`);
+  }, [selectedKeys, router]);
+  
+  
 
   const hasSearchFilter = Boolean(filterValue);
 
@@ -141,7 +160,7 @@ export default function TableBase({
           return (
             <Chip
               className="select-all capitalize"
-              color={user.type == "pro" ? "secondary" : "primary"}
+              color={user.project_type == "pro" ? "secondary" : "primary"}
               size="sm"
               variant="flat"
             >
@@ -179,7 +198,7 @@ export default function TableBase({
           return (
             <Chip
               className="select-all capitalize"
-              color={user.project == "vps" ? "secondary" : "primary"}
+              color={user.project == "pro" ? "secondary" : "primary"}
               size="sm"
               variant="flat"
             >
@@ -201,15 +220,25 @@ export default function TableBase({
 
       case "status":
         return (
-          <Chip
-            className="capitalize"
-            color={statusColorMap2[user.status]}
-            size="sm"
-            variant="flat"
-          >
-            {/* {typeof(cellValue)===Boolean ? cellValue==true ? "True" : "False":cellValue} */}
-            {typeof(cellValue) === 'boolean' ? cellValue === true ? "True" : "False" : cellValue}
-          </Chip>
+              <Chip
+                className="capitalize"
+                color={statusColorMap[user.status]}
+                size="sm"
+                variant="flat"
+              >
+                {
+                  typeof cellValue === 'boolean'
+                    ? cellValue 
+                      ? "True" 
+                      : "False"
+                    : cellValue === "0"
+                    ? "False"
+                    : cellValue === "1"
+                    ? "True"
+                    : cellValue
+                }
+              </Chip>
+
         );
 
       case "ipVersion":
@@ -240,7 +269,7 @@ export default function TableBase({
         return (
           <Chip
             className="capitalize"
-            color={statusColorMap2[user.pending]}
+            color={statusColorMap[user.pending]}
             size="sm"
             variant="flat"
           >
@@ -264,7 +293,7 @@ export default function TableBase({
         return (
           <Chip
             className="capitalize"
-            color={statusColorMap2[user.ptr]}
+            color={statusColorMap[user.ptr]}
             size="sm"
             variant="dot"
           >
@@ -275,7 +304,7 @@ export default function TableBase({
       case "actions":
         return (
           <div className="relative flex items-center justify-end gap-2">
-            <Dropdown>
+            {/* <Dropdown>
               <DropdownTrigger>
                 <Button isIconOnly size="sm" variant="light">
                   <VerticalDotsIcon className="text-default-300" />
@@ -283,28 +312,18 @@ export default function TableBase({
               </DropdownTrigger>
               <DropdownMenu>
                 <DropdownItem>View</DropdownItem>
-                <DropdownItem>Edit</DropdownItem>
+                <DropdownItem >Edit</DropdownItem>
                 <DropdownItem>Delete</DropdownItem>
               </DropdownMenu>
-            </Dropdown>
+            </Dropdown> */}
+           {/* <ActionsServerTable user={user}/> */}
+           <ActionsServerTable user={user} serverproviders={serverproviders}/>
           </div>
         );
       default:
         return cellValue;
     }
   }, []);
-
-  // const onNextPage = React.useCallback(() => {
-  //   if (page < pages) {
-  //     setPage(page + 1);
-  //   }
-  // }, [page, pages]);
-
-  // const onPreviousPage = React.useCallback(() => {
-  //   if (page > 1) {
-  //     setPage(page - 1);
-  //   }
-  // }, [page]);
 
   const onRowsPerPageChange = React.useCallback(
     (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -493,7 +512,7 @@ export default function TableBase({
       </div>
     );
   }, [selectedKeys, items.length, page, pages, hasSearchFilter]);
-
+console.log(selectedKeys)
 
   return (
     

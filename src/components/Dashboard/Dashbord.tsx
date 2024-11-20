@@ -1,4 +1,4 @@
-import { cookies } from 'next/headers'
+
 import axios from 'axios'
 import DataStatsOne from "@/components/DataStats/DataStatsOne"
 import DataStatsTwo from "@/components/DataStats/DataStatsTwo"

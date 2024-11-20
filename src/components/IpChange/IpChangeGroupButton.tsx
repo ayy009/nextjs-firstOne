@@ -23,21 +23,22 @@ function IpChangeGroupButton() {
 
 
   return (
-    <div className='mb-5 w-full flex justify-between '>
-        <h1 className='text-3xl ml-5 '>List Of Servers To Change</h1>
-        <ButtonGroup >
+    <div className='mb-5 w-full flex flex-col md:flex-row justify-between '>
+        <h1 className='mb-3 md:mb-0 text-3xl ml-5 '>List Of Servers To Change</h1>
+        <ButtonGroup className='' >
 
 
-        <Button className="dark:bg-slate-950 dark:hover:bg-slate-800 " endContent={!isMobile && <CircleDashed />}>
+        <Button className="dark:bg-gray-900 dark:hover:bg-slate-800 " endContent={!isMobile && <CircleDashed />}>
         <Switch
           size="sm"
           color="success"
           checked={isPending}
           onChange={togglePendingStatus}
+          
         />
           Change Status Panding
         </Button>
-        <Button className="dark:bg-slate-950 dark:hover:bg-slate-800" endContent={!isMobile && <PencilLine />}>
+        <Button className="dark:bg-gray-900 dark:hover:bg-slate-800" endContent={!isMobile && <PencilLine />}>
         <Switch
           size="sm"
           color="success"
@@ -48,11 +49,11 @@ function IpChangeGroupButton() {
             Change Status
         </Button>
 
-        <Button className="dark:bg-slate-950 dark:hover:bg-slate-800" endContent={!isMobile && <Trash2 />}>
+        <Button className="dark:bg-gray-900 dark:hover:bg-slate-800" endContent={!isMobile && <Trash2 />}>
           Delete
         </Button>
 
-        <Button className="dark:bg-slate-950 dark:hover:bg-slate-800" endContent={!isMobile && <Plus />}>
+        <Button className="dark:bg-gray-900 dark:hover:bg-slate-800" endContent={!isMobile && <Plus />}>
           Add
         </Button>
       </ButtonGroup>
