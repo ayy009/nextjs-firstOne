@@ -32,9 +32,9 @@ export default function HtmlCardArray({ serverSelect }: any) {
       <Spacer y={5} />
       <div className='grid gap-4 grid-cols-1 lg:grid-cols-2'>
         {staticHtmlArray1.map((html: any, index: any) => (
-          <div>
+          <div key={index} >
                
-          <Card key={index} className="mb-4 bg:white dark:bg-gray-dark rounded-sm">
+          <Card  className="mb-4 bg:white dark:bg-gray-dark rounded-sm">
           <div className='flex justify-center  mt-2'>
                 <h1 className='text-xl font-semibold'>Value: {html.value}</h1>
                 <p>&nbsp; &nbsp;</p>

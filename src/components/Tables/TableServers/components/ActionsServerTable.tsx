@@ -221,11 +221,8 @@ function EditServerModal({ user, isOpen, onOpenChange, serverproviders }: {
                   <Select
                     label="Email Account"
                     value={[formData.email_account]}
-                    // selectedKeys={accountsByID[formData.email_account]}
-                    // selectedKeys={accountsByID[parseInt(formData.email_account)] }
+                    selectedKeys={[formData.email_account]}
                     onChange={(e) => {
-                      // console.log(accountsByID[parseInt(formData.email_account)])
-                      // handleChange("email_account", e.target.value)
                       handleEmailAccount(e.target.value)
                     }}
                     variant="bordered"

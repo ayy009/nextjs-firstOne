@@ -6,7 +6,7 @@ import { Grid2x2Check } from 'lucide-react'
 import React, { useState } from 'react'
 import HtmlCardArray from '@/components/PmtaManager/components/HtmlCards'
 
-function page() {
+function Page() {
   const [serverSelect,setServerSelect] = useState([])
 
   return (
@@ -38,4 +38,4 @@ function page() {
   )
 }
 
-export default page
+export default Page

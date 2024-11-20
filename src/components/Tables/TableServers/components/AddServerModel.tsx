@@ -152,10 +152,10 @@ export default function AddServerModal({ serverproviders }: any) {
                       variant="bordered"
                     />
 
-                    <Select
+                    {/* <Select
                       label="Server Provider"
                       placeholder="Select provider"                    
-                    selectedKeys={[formData.serverProvider]}
+        
                       onChange={(e) => {
                         
                         handleSelectServerProvider(e.target.value);
@@ -168,7 +168,22 @@ export default function AddServerModal({ serverproviders }: any) {
                           {items.id}--{items.name}
                         </SelectItem>
                       ))}
-                    </Select>
+                    </Select> */}
+                    <Select
+  label="Server Provider"
+  placeholder="Select provider"
+  selectedKeys={[formData.serverProvider]}
+  onChange={(e) => {
+    handleSelectServerProvider(e.target.value);
+  }}
+  variant="bordered"
+>
+  {serverproviders.map((items: any) => (
+    <SelectItem key={items.id} value={items.id}>
+      {items.id}--{items.name}
+    </SelectItem>
+  ))}
+</Select>
 
                     <Select
                       label="OS Installed"
@@ -217,10 +232,10 @@ export default function AddServerModal({ serverproviders }: any) {
                     <Select
                       label="Email Account"
                       // selectedKeys={[accountsByID[parseInt(formData.emailAccount)]]}
-                      
+                      // value={accountsByID[emailAccount]}
                       onChange={(e) =>{
                         
-                        handleChange("emailAccount", e.target.value) 
+                        // handleChange("emailAccount", e.target.value) 
                         handleEmailAccount(e.target.value)
                       }
 
