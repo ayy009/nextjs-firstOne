@@ -5,7 +5,6 @@ import { useRouter } from 'next/navigation';
 import { toast } from 'react-hot-toast';
 import loginAction from '@/actions/loginAction';
 import { Spinner } from '@nextui-org/react';
-import Image from 'next/image';
 
 
 
@@ -106,7 +105,7 @@ function  LoginForm() {
   return (
     <div className="flex flex-col min-h-screen items-center justify-center px-6 py-12 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-        <Image
+        <img
           className="mx-auto h-10 w-auto "
           src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=600"
           // src={"/images/logo-E-impact/logo_white.png"}

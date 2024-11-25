@@ -17,7 +17,7 @@ export async function addServer(data: any) {
   try {
     
 
-    return "aaaaaaaaaaaaaaaaaaaaaaaa";
+    return response.data;
   } catch (error: any) {
     // Handle and throw a custom error message
     throw new Error(

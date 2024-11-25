@@ -16,7 +16,6 @@ const CodeEditor: React.FC<CodeEditorProps> = ({
 }) => {
   const htmlEditorRef = useRef<HTMLDivElement>(null);
   const cssEditorRef = useRef<HTMLDivElement>(null);
-  const [activeTab, setActiveTab] = useState("html");
   const [previewContent, setPreviewContent] = useState({
     html: initialHtml,
     css: initialCss

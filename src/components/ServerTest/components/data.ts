@@ -1,10 +1,10 @@
 const columns = [
-  { name: "Server", uid: "server", sortable: true },
-  { name: "Interface", uid: "interface", sortable: true },
-  { name: "Return Path", uid: "returnPath", sortable: true },
-  { name: "Receiver Email", uid: "receiverEmail", sortable: true },
-  { name: "Interface Tag", uid: "interfaceTag", sortable: true },
-  { name: "Test Status", uid: "testStatus", sortable: true },
+  { name: "Server", uid: "server_name", sortable: true },
+  { name: "Interface", uid: "interface_ip", sortable: true },
+  { name: "Return Path", uid: "return_path", sortable: true },
+  { name: "Receiver Email", uid: "receiver", sortable: true },
+  { name: "Interface Tag", uid: "interface_tag", sortable: true },
+  { name: "Test Status", uid: "smtp_status", sortable: true },
 ];
 
 const statusOptions = [
@@ -13,37 +13,17 @@ const statusOptions = [
   { name: "Returned", uid: "returned" },
 ];
 
-const dataTable = [
-  {
-    id: 33810,
-    server: "Server_1",
-    interface: "Interface_A",
-    returnPath: "Return Path 1",
-    receiverEmail: "email1@example.com",
-    interfaceTag: "Tag_1",
-    testStatus: "Active",
-  },
-  {
-    id: 338114,
-    server: "Server_2",
-    interface: "Interface_B",
-    returnPath: "Return Path 2",
-    receiverEmail: "email2@example.com",
-    interfaceTag: "Tag_2",
-    testStatus: "Inactive",
-  },
-  // Add more rows as needed.
-];
+
 
 const INITIAL_VISIBLE_COLUMNS = [
-  "server",
-  "interface",
-  "returnPath",
-  "receiverEmail",
-  "interfaceTag",
-  "testStatus",
+  "server_name",
+  "interface_ip",
+  "return_path",
+  "receiver",
+  "interface_tag",
+  "smtp_status",
 ];
 
 const tableName = "Servers Table";
 
-export { columns, dataTable, statusOptions, INITIAL_VISIBLE_COLUMNS, tableName };
+export { columns, statusOptions, INITIAL_VISIBLE_COLUMNS, tableName };

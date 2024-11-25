@@ -18,7 +18,7 @@ interface DataStatsProps {
 const DataStatsOne: React.FC<DataStatsProps> = ({ data }) => {
   // Separate Free Server and other projects
   const FreeServer = data
-    .filter((item) => item.project_name === null)
+    .filter((item) => item.project_name == null)
     .map((item) => ({
       ...item,
       project_name: "Free Servers",

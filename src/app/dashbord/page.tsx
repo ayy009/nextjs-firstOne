@@ -4,7 +4,6 @@ import DataStatsTwo from "@/components/DataStats/DataStatsTwo"
 import TableBase from "@/components/Tables/TableBase"
 import { columns, INITIAL_VISIBLE_COLUMNS, statusOptions, tableName } from "@/components/Dashboard/data"
 import { getUserApiKey } from '@/lib/ApiKey'
-import { redirect } from 'next/navigation'
 
 interface Props {
   searchParams: {
@@ -27,7 +26,8 @@ const Dashboard = async ({ searchParams }: Props) => {
 
 
   const { data } = await axios.post(ApiUrl2)
-  console.log(data)
+
+  
   const dataTwo = {    
     nbrActiveServers: data.nbrActiveServers,
     nbrInactiveServers: data.nbrInactiveServers,

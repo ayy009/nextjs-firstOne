@@ -4,7 +4,7 @@ import {  PackageOpen } from 'lucide-react';
 import TableTestsResults from "./components/TableTestsResults";
 
 
-export default function SideFour() {
+export default function SideFour({dataTable}:any) {
   const itemClasses = {
     base: "py-0 w-full",
     title: "font-normal text-medium",
@@ -29,7 +29,7 @@ export default function SideFour() {
         className=" dark:bg-gray-dark"
         startContent={<PackageOpen    className="text-primary" />}
         title="Tests Results">
-        <TableTestsResults/>
+        <TableTestsResults dataTable={dataTable}/>
         </AccordionItem>
     </Accordion>
   );

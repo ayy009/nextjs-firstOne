@@ -1,10 +1,10 @@
 import TableBase from '@/components/Tables/TableBase'
 import React from 'react'
-import {columns, dataTable, statusOptions,INITIAL_VISIBLE_COLUMNS,tableName} from "./data";
+import {columns, statusOptions,INITIAL_VISIBLE_COLUMNS,tableName} from "./data";
 import { Button, ButtonGroup } from '@nextui-org/react';
 import { Copy, Layers2 } from 'lucide-react';
 
-function TableTestsResults() {
+function TableTestsResults({dataTable}:any) {
   return (
 <div className="">
   <div className="text-center md:text-right w-full mb-2 md:pr-9">

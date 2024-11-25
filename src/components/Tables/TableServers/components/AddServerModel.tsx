@@ -1,5 +1,5 @@
 "use client";
-
+import { toast } from 'react-hot-toast';
 import React, { useState } from "react";
 import {
   Modal,
@@ -63,6 +63,13 @@ export default function AddServerModal({ serverproviders }: any) {
 
     try {
       const result = await addServer(formData);
+      if (result.success == true) {
+        toast.success(result.msg, { duration: 4000 });
+        
+      } else {
+        toast.error(result.msg, { duration: 4000 });
+      }
+      console.log(result)
       console.log("Server added successfully:", result);
 
       // Clear form and close modal

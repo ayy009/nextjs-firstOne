@@ -4,35 +4,44 @@ import React from "react"
 import { Button, ScrollShadow, Card, CardBody, CardHeader, Input } from "@nextui-org/react"
 import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, Search } from 'lucide-react'
 
+interface ServerItem {
+  id: number;
+  label: string;
+}
+
 export default function DeliveryBase({ 
-  data, 
-  SetControlSetServerSelect
+  data,
+  SetControlSetServerSelect,
+  setRightItems,
+  rightItems,
+  setLeftItems,
+  leftItems
 }: { 
-  data: Array<{ value: string; label: string }>;
-  SetControlSetServerSelect?: (items: Array<{ value: string; label: string }>) => void;
+  data: ServerItem[];
+  SetControlSetServerSelect?: (items: ServerItem[]) => void;
+  setRightItems: React.Dispatch<React.SetStateAction<ServerItem[]>>;
+  rightItems: ServerItem[];
+  setLeftItems: React.Dispatch<React.SetStateAction<ServerItem[]>>;
+  leftItems: ServerItem[];
 }) {
-  const [leftItems, setLeftItems] = React.useState(data)
-  const [rightItems, setRightItems] = React.useState<Array<{ value: string; label: string }>>([])
-  const [selectedLeft, setSelectedLeft] = React.useState<Array<{ value: string; label: string }>>([])
-  const [selectedRight, setSelectedRight] = React.useState<Array<{ value: string; label: string }>>([])
+  const [selectedLeft, setSelectedLeft] = React.useState<ServerItem[]>([])
+  const [selectedRight, setSelectedRight] = React.useState<ServerItem[]>([])
   const [leftSearch, setLeftSearch] = React.useState("")
   const [rightSearch, setRightSearch] = React.useState("")
 
   const filteredLeftItems = leftItems.filter((item) =>
-    `${item.value} - ${item.label}`.toLowerCase().includes(leftSearch.toLowerCase())
+    `${item.id} - ${item.label}`.toLowerCase().includes(leftSearch.toLowerCase())
   )
   
   const filteredRightItems = rightItems.filter((item) =>
-    `${item.value} - ${item.label}`.toLowerCase().includes(rightSearch.toLowerCase())
+    `${item.id} - ${item.label}`.toLowerCase().includes(rightSearch.toLowerCase())
   )
 
   React.useEffect(() => {
-    console.log("Available Items:", leftItems)
-    console.log("Selected Items:", rightItems)
     if(SetControlSetServerSelect) SetControlSetServerSelect(rightItems)
-  }, [leftItems, rightItems])
+  }, [leftItems, rightItems, SetControlSetServerSelect])
 
-  const handleSelect = (item: { value: string; label: string }, side: "left" | "right") => {
+  const handleSelect = (item: ServerItem, side: "left" | "right") => {
     if (side === "left") {
       setSelectedLeft((prev) =>
         prev.includes(item) ? prev.filter((i) => i !== item) : [...prev, item]
@@ -46,7 +55,7 @@ export default function DeliveryBase({
     }
   }
 
-  const handleDoubleClick = (item: { value: string; label: string }, from: "left" | "right") => {
+  const handleDoubleClick = (item: ServerItem, from: "left" | "right") => {
     if (from === "left") {
       setLeftItems(leftItems.filter((i) => i !== item))
       setRightItems([...rightItems, item])
@@ -101,7 +110,7 @@ export default function DeliveryBase({
             <ScrollShadow className="h-[300px]">
               {filteredLeftItems.map((item) => (
                 <div
-                  key={item.value}
+                  key={item.id}
                   onClick={() => handleSelect(item, "left")}
                   onDoubleClick={() => handleDoubleClick(item, "left")}
                   className={`p-2 cursor-pointer rounded-md transition-colors ${
@@ -110,7 +119,7 @@ export default function DeliveryBase({
                       : "hover:bg-default-100"
                   }`}
                 >
-                  {item.value} - {item.label}
+                   {item.label}
                 </div>
               ))}
             </ScrollShadow>
@@ -174,7 +183,7 @@ export default function DeliveryBase({
             <ScrollShadow className="h-[300px]">
               {filteredRightItems.map((item) => (
                 <div
-                  key={item.value}
+                  key={item.id}
                   onClick={() => handleSelect(item, "right")}
                   onDoubleClick={() => handleDoubleClick(item, "right")}
                   className={`p-2 cursor-pointer rounded-md transition-colors ${
@@ -183,7 +192,7 @@ export default function DeliveryBase({
                       : "hover:bg-default-100"
                   }`}
                 >
-                  {item.value} - {item.label}
+                  {item.label}
                 </div>
               ))}
             </ScrollShadow>

@@ -48,6 +48,7 @@ export default function SideThree() {
       <CodeEditor 
         initialHtml="<h1>Hello World</h1><p>Start editing to see changes!</p>"
         initialCss=""
+        
       />
     </div>
         </AccordionItem>

@@ -19,15 +19,10 @@ import {
   ChipProps,
   SortDescriptor,
 } from "@nextui-org/react";
-
-import { VerticalDotsIcon } from "./vector/VerticalDotsIcon";
 import { ChevronDownIcon } from "./vector/ChevronDownIcon";
 import { SearchIcon } from "./vector/SearchIcon";
-// import {columns, users, statusOptions,INITIAL_VISIBLE_COLUMNS} from "./data";
 import { capitalize } from "./utils";
-
 import ActionsDropDown from "../Dropdowns/ActionsDropDown";
-// import EditServerModal from "./TableServers/components/EditServerModel";
 import { ActionsServerTable } from "./TableServers/components/ActionsServerTable";
 import { useSearchParams,useRouter } from "next/navigation";
 
@@ -193,6 +188,31 @@ export default function TableBase({
           </Chip>
         
           );
+
+            case "smtp_status":
+          return (
+            <Chip
+              className="select-all capitalize"
+              color={user.smtp_status == "1" ? "success" : "danger"}
+              size="sm"
+              variant="flat"
+            >
+              {user.smtp_status == "1" ? "True" : "False"}
+            </Chip>
+          );
+
+          case "return_path":
+            return (
+              <Chip
+                className="select-all capitalize"
+                color={user.smtp_status == null ? "success" : "danger"}
+                size="sm"
+                variant="flat"
+              >
+                {user.smtp_status == null ? "True" : "False"}
+              </Chip>
+            );
+
 
       case "project":
           return (
