@@ -1,8 +1,8 @@
 import React from 'react'
 import TableBase from '../TableBase'
-import {columns, dataTable, statusOptions,INITIAL_VISIBLE_COLUMNS,tableName} from "./data";
+import {columns, statusOptions,INITIAL_VISIBLE_COLUMNS,tableName} from "./data";
 
-function App() {
+function App({dataTable}:any) {
   return (
     <TableBase columns={columns} dataTable={dataTable} statusOptions={statusOptions}  INITIAL_VISIBLE_COLUMNS ={INITIAL_VISIBLE_COLUMNS} tableName={tableName}/>
   )

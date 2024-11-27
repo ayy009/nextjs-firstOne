@@ -2,20 +2,11 @@
 import {Accordion, AccordionItem} from "@nextui-org/react";
 import {  CodeXml } from 'lucide-react';
 import CodeEditor from "./components/CodeEditor";
-import { useState } from "react";
 
 
-export default function SideThree() {
+export default function SideThree({ htmlCode, setHtmlCode }:any) {
 
-  const [html, setHtml] = useState('<h1>Hello World</h1>');
-  const [css, setCss] = useState('body { color: red; }');
-  const [js, setJs] = useState('console.log("Hello World");');
 
-  const handleUpdate = (updatedHtml: string, updatedCss: string, updatedJs: string) => {
-    setHtml(updatedHtml);
-    setCss(updatedCss);
-    setJs(updatedJs);
-  };
   const itemClasses = {
     base: "py-0 w-full",
     title: "font-normal text-medium",
@@ -46,10 +37,10 @@ export default function SideThree() {
     <div style={{ padding: '10px' }}>
 
       <CodeEditor 
-        initialHtml="<h1>Hello World</h1><p>Start editing to see changes!</p>"
-        initialCss=""
-        
-      />
+            initialHtml={htmlCode}
+            initialCss=""
+            onHtmlChange={setHtmlCode}
+        />
     </div>
         </AccordionItem>
     </Accordion>

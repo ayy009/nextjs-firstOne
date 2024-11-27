@@ -4,6 +4,21 @@
 import { getUserApiKey } from "@/lib/ApiKey";
 import axios from "axios";
 
+export async function TestSendServers() {
+    const userApiKey = await getUserApiKey();
+    const getServersUrl = `http://manageservers.lwebl3ami9.store/api/test_send_server?api_key=${userApiKey}`;
+    const resultgetServers = await axios.post(getServersUrl);
+
+    const dataGetServers = resultgetServers.data.nonSelectedDeliveryServers;
+
+    const formattedData = dataGetServers.map((item: any) => ({
+      id: item.id,
+      label: `${item.name}-[PV${item.serverprovider_id}]`, // Combine name and serverprovider_id into label
+    }));
+    return formattedData
+    
+}
+
 export async function GetServersInterfaces({queryParams}:any) {
     const apikey = await getUserApiKey()
     queryParams.api_key=apikey
@@ -32,13 +47,14 @@ const url="http://manageservers.lwebl3ami9.store/api/auto_select"
 }
 
 
-export async function TestSend({formData,interfacesIds}:any) {
+export async function TestSend({formData,interfacesIds,htmlCode}:any) {
 
     // --------------------------------------------------------------- create queryParams
     const apikey = await getUserApiKey()
     formData.api_key=apikey
     formData.compaign_id=0
     formData.selected_interface=interfacesIds
+    formData.message_body_html =htmlCode
 
 
     const variables: Record<string, string> = {};
@@ -67,13 +83,13 @@ export async function TestSend({formData,interfacesIds}:any) {
             }
         }
     });
-
-
     formData.message_headers_html=variables.message_headers_html;
     formData.test_emails = formData.testEmails;
+    formData.return_path = formData.returnPath;
     // --------------------------------------------------------------- end queryParams
     // --------------------------------------------------------------- create url && request
 
+    console.log("-------------------------",formData)
     const url = "http://manageservers.lwebl3ami9.store/api/test_sending_server"
     const result = await axios.post(url,formData);
     console.log(result.data)

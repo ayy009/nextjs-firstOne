@@ -35,14 +35,10 @@ const statusColorMap: Record<string, ChipProps["color"]> = {
   false: "danger",
   "1": "success",
   "0": "danger",
+  None:"danger"
 };
 
-const statusColorMap2: Record<string, ChipProps["color"]> = {
-  true: "success",
-  false: "danger",
-  "1": "success",
-  "0": "danger",
-};
+
 
 export default function TableBase({
   columns,
@@ -98,7 +94,7 @@ export default function TableBase({
       const filterValueLower = filterValue.toLowerCase();
       filteredUsers = filteredUsers.filter((user) =>
         Object.values(user).some((val: any) =>
-          val.toString().toLowerCase().includes(filterValueLower),
+          val?.toString().toLowerCase().includes(filterValueLower),
         ),
       );
     }
@@ -138,6 +134,21 @@ export default function TableBase({
     const cellValue = user[columnKey as keyof User];
 
     switch (columnKey) {
+      //server project Status
+      case "entity":
+        return (
+          <Chip
+            // className="select-all capitalize"
+            // color={user.project == "pro" ? "secondary" : "primary"}
+            // size="sm"
+            // variant="flat"
+          >
+            {user.project1 +" / "+ user.entity}
+          </Chip>
+        );
+
+      // domains 
+      // domains Provider
       // type dashbord
       case "type":
         return (
@@ -189,7 +200,7 @@ export default function TableBase({
         
           );
 
-            case "smtp_status":
+      case "smtp_status":
           return (
             <Chip
               className="select-all capitalize"
@@ -201,7 +212,7 @@ export default function TableBase({
             </Chip>
           );
 
-          case "return_path":
+      case "return_path":
             return (
               <Chip
                 className="select-all capitalize"
@@ -212,7 +223,6 @@ export default function TableBase({
                 {user.smtp_status == null ? "True" : "False"}
               </Chip>
             );
-
 
       case "project":
           return (
@@ -273,6 +283,18 @@ export default function TableBase({
           </Chip>
         );
 
+      case "ip_version":
+          return (
+            <Chip
+              className="capitalize"
+              color={user.ip_version == "IpV4" ? "primary" : "secondary"}
+              size="sm"
+              variant="shadow"
+            >
+              {cellValue}
+            </Chip>
+          );
+
       case "serverStatus":
         return (
           <Chip
@@ -284,6 +306,18 @@ export default function TableBase({
             {cellValue}
           </Chip>
         );
+
+      case "status_server":
+          return (
+            <Chip
+              className="capitalize"
+              color={statusColorMap[user.status_server]}
+              size="sm"
+              variant="flat"
+            >
+              {cellValue}
+            </Chip>
+          );
 
       case "pending":
         return (
@@ -321,26 +355,32 @@ export default function TableBase({
           </Chip>
         );
 
-      case "actions":
-        return (
-          <div className="relative flex items-center justify-end gap-2">
-            {/* <Dropdown>
-              <DropdownTrigger>
-                <Button isIconOnly size="sm" variant="light">
-                  <VerticalDotsIcon className="text-default-300" />
-                </Button>
-              </DropdownTrigger>
-              <DropdownMenu>
-                <DropdownItem>View</DropdownItem>
-                <DropdownItem >Edit</DropdownItem>
-                <DropdownItem>Delete</DropdownItem>
-              </DropdownMenu>
-            </Dropdown> */}
-           {/* <ActionsServerTable user={user}/> */}
-           <ActionsServerTable user={user} serverproviders={serverproviders}/>
-          </div>
-        );
-      default:
+      // case "actions":
+      //   return (
+      //     <div className="relative flex items-center justify-end gap-2">
+      //       {/* <Dropdown>
+      //         <DropdownTrigger>
+      //           <Button isIconOnly size="sm" variant="light">
+      //             <VerticalDotsIcon className="text-default-300" />
+      //           </Button>
+      //         </DropdownTrigger>
+      //         <DropdownMenu>
+      //           <DropdownItem>View</DropdownItem>
+      //           <DropdownItem >Edit</DropdownItem>
+      //           <DropdownItem>Delete</DropdownItem>
+      //         </DropdownMenu>
+      //       </Dropdown> */}
+      //      {/* <ActionsServerTable user={user}/> */}
+      //      {/* {tableName == "Domains Table" && <ActionsServerTable user={user} serverproviders={serverproviders}/>} */}
+      //      {/* {tableName == "Domains Table" && <ActionsServerTable user={user} serverproviders={serverproviders}/>} */}
+
+
+           
+      //     </div>
+      //   );
+      
+      
+        default:
         return cellValue;
     }
   }, []);

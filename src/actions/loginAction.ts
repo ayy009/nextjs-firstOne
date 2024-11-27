@@ -19,7 +19,6 @@ export default async function loginAction({ email, password }: LoginCredentials)
     );
 
     const { success, message, user_api_key } = response.data;
-    console.log(response.data);
 
     // Check if login was successful
     if (!success) {
@@ -41,7 +40,7 @@ export default async function loginAction({ email, password }: LoginCredentials)
       sameSite: "strict",
     });
     // cookies().set("user_api_key",user_api_key);
-    // cookies().set("email",email);
+    cookies().set("email",email);
 
     // Return the essential data to the client
     return { message: "Login successful!", status: 200};

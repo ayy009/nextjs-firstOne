@@ -4,10 +4,9 @@ import SideFour from "@/components/ServerTest/SideFour";
 import SideOne from "@/components/ServerTest/SideOne";
 import SideThree from "@/components/ServerTest/SideThree";
 import SideTwo from "@/components/ServerTest/SideTwo";
-import { getUserApiKey } from "@/lib/ApiKey";
-import axios from "axios";
-import { TestSend } from "@/actions/ServersActions/SendTestActions";
+import { TestSend, TestSendServers } from "@/actions/ServersActions/SendTestActions";
 import toast from "react-hot-toast";
+import EmailInterfaceSkeleton from "@/components/ServerTest/components/EmailInterfaceSkeleton";
 
 interface Server {
   id: number;
@@ -23,6 +22,12 @@ const TablesPage = () => {
   const [formattedData, setFormattedData] = useState<any[]>([]); // State for the formatted data
   const [loading, setLoading] = useState<boolean>(true); // State for loading
   const [dataTable,setDataTable] = useState([])
+  //-----------------------------------------------------------------------------------------------------------start status for html
+    // New state for HTML code
+    const [htmlCode, setHtmlCode] = useState("<h1>Hello World</h1><p>Start editing to see changes!</p>");
+
+    // ... (previous useEffect and other functions)
+  
 
   // ---------------------------------------------------------------------------------------------------------- start states for test
   const [formData, setFormData] = useState({
@@ -34,29 +39,14 @@ const TablesPage = () => {
 
   const [rightItemsInterfaces, setRightItemsInterfaces] = React.useState<ServerItem[]>([]);
 
+  useEffect(
+    ()=>{
+      console.log(htmlCode)
 
-  // const handleSubmit = async (e: React.FormEvent) => {
-  //   e.preventDefault();
-  //   // Add your form submission logic here
-  //   console.log("--------------------------------------start testSend")
-  //   // console.log(formData)
-  //   const interfacesIds = rightItemsInterfaces.map((item) => item.id);
-
-    
-  //   const result = await TestSend({formData,interfacesIds})
-  //     result.results = result.results.map((item:any, index:any) => ({
-  //       ...item,       // Retain existing properties
-  //       id: index + 1, // Add a new 'id' (starting from 1 or any other logic)
-  //     }));
-  //   setDataTable(result.results)
-  //   console.log("--------------------------------------end testSend")
+    },[htmlCode])
 
 
-  // };
-
-  // ---------------------------------------------------------------------------------------------------------- end states for test
-
-
+  
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
@@ -64,7 +54,7 @@ const TablesPage = () => {
       console.log("--------------------------------------start testSend");
       const interfacesIds = rightItemsInterfaces.map((item) => item.id);
      
-      const result = await TestSend({ formData, interfacesIds });
+      const result = await TestSend({ formData, interfacesIds,htmlCode });
       
       const processedResults = result.results.map((item: any, index: number) => ({
         ...item,
@@ -103,18 +93,11 @@ const TablesPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const userApiKey = await getUserApiKey();
-        const getServersUrl = `http://manageservers.lwebl3ami9.store/api/test_send_server?api_key=${userApiKey}`;
-        const resultgetServers = await axios.post(getServersUrl);
 
-        const dataGetServers = resultgetServers.data.nonSelectedDeliveryServers;
 
-        const formattedData = dataGetServers.map((item: any) => ({
-          id: item.id,
-          label: `${item.name}-[PV${item.serverprovider_id}]`, // Combine name and serverprovider_id into label
-        }));
+        const result = await TestSendServers();
 
-        setFormattedData(formattedData); // Set the formatted data
+        setFormattedData(result); // Set the formatted data
       } catch (error) {
         console.error("Error fetching server data:", error);
       } finally {
@@ -126,7 +109,7 @@ const TablesPage = () => {
   }, []); // Empty dependency array means this effect runs once when the component mounts
 
   if (loading) {
-    return <div>Loading...</div>; // Render a loading indicator while data is being fetched
+    return <EmailInterfaceSkeleton/>; // Render a loading indicator while data is being fetched
   }
 
   return (
@@ -137,7 +120,7 @@ const TablesPage = () => {
           <SideTwo dataGetServers={formattedData} rightItemsInterfaces={rightItemsInterfaces} setRightItemsInterfaces={setRightItemsInterfaces} />
         </div>
         <div className="w-full">
-          <SideThree />
+          <SideThree setHtmlCode={setHtmlCode} htmlCode={htmlCode}/>
           <SideFour dataTable={dataTable}/>
         </div>
       </div>

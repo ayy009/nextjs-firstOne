@@ -1,21 +1,30 @@
 "use client"
+
 import React, { useRef, useEffect, useState } from 'react';
 import { EditorView, basicSetup } from 'codemirror';
 import { html } from '@codemirror/lang-html';
 import { css } from '@codemirror/lang-css';
 import { ViewUpdate } from '@codemirror/view';
+import { Button } from '@nextui-org/react';
+import { Play } from 'lucide-react';
 
 interface CodeEditorProps {
-  initialHtml?: string;
-  initialCss?: string;
+  initialHtml: string;
+  initialCss: string;
+  onHtmlChange: (html: string) => void;
 }
 
 const CodeEditor: React.FC<CodeEditorProps> = ({
-  initialHtml = "<h1>Hello World</h1>",
-  initialCss = "body {  }"
+  initialHtml,
+  initialCss = "body {  }",
+  onHtmlChange
 }) => {
   const htmlEditorRef = useRef<HTMLDivElement>(null);
   const cssEditorRef = useRef<HTMLDivElement>(null);
+  const [editorContent, setEditorContent] = useState({
+    html: initialHtml,
+    css: initialCss
+  });
   const [previewContent, setPreviewContent] = useState({
     html: initialHtml,
     css: initialCss
@@ -61,7 +70,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({
           EditorView.updateListener.of((update: ViewUpdate) => {
             if (update.docChanged) {
               const newContent = update.state.doc.toString();
-              setPreviewContent(prev => ({
+              setEditorContent(prev => ({
                 ...prev,
                 [key]: newContent
               }));
@@ -86,7 +95,12 @@ const CodeEditor: React.FC<CodeEditorProps> = ({
       editorRefs.current.html?.destroy();
       editorRefs.current.css?.destroy();
     };
-  }, [initialHtml, initialCss, isMobile]); // Add `isMobile` to the dependency array
+  }, [initialHtml, initialCss, isMobile]);
+
+  const handleRunClick = () => {
+    setPreviewContent(editorContent);
+    onHtmlChange(editorContent.html);
+  };
 
   const previewDocument = `
     <!DOCTYPE html>
@@ -101,7 +115,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({
   return (
     <div className="p-2 block md:flex flex-row justify-evenly">
       <div className="w-full md:w-[48%]">
-        <h2>HTML & CSS Live Editor</h2>
+        <h2 className="text-lg font-semibold">HTML Editor</h2>
         <div className="h-full">
           <div
             ref={htmlEditorRef}
@@ -109,9 +123,20 @@ const CodeEditor: React.FC<CodeEditorProps> = ({
           />
         </div>
       </div>
+      <Button 
+        className='absolute rounded-3xl p-0 text-white dark:text-dark'
+        color="success" 
+        endContent={<Play />}
+        onClick={handleRunClick}
+      >
+        Run
+      </Button>
 
       <div className="w-full md:w-[48%] mt-4 md:mt-0">
-        <h2>Preview</h2>
+        <div className='flex justify-end w-full'>
+          <h2 className="text-lg font-semibold">Live Preview</h2>
+        </div>
+
         <div className={`border border-gray-300 rounded-sm mt-2 ${isMobile ? 'h-[300px]' : 'h-[600px]'} overflow-auto`}>
           <iframe
             srcDoc={previewDocument}
@@ -126,3 +151,4 @@ const CodeEditor: React.FC<CodeEditorProps> = ({
 };
 
 export default CodeEditor;
+

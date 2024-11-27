@@ -12,7 +12,7 @@ export async function middleware(request: NextRequest) {
   if (!cookie) {
     return NextResponse.redirect(new URL("/auth", request.url));
   }else{
-  updateSession();
+  // updateSession();
   }
 
   return NextResponse.next();

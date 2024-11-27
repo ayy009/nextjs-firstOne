@@ -4,7 +4,7 @@ import React from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import { LayoutDashboard, Mailbox, MapPinPlus, Server, Sheet, Table2, Tickets, UserRoundPen } from 'lucide-react';
+import { LayoutDashboard, Link2, Mailbox, MapPinPlus, Server, Sheet, Table2, Tickets, UserRoundPen } from 'lucide-react';
 import SidebarItem from "@/components/Sidebar/SidebarItem";
 import ClickOutside from "@/components/ClickOutside";
 import useLocalStorage from "@/hooks/useLocalStorage";
@@ -35,8 +35,8 @@ const menuGroups = [
         icon: (
           <Sheet />
         ),
-        label: "Tables",
-        route: "/tables",
+        label: "Server Interfaces",
+        route: "/serverinterfaces",
         // children: [
         //   { label: "Tables", route: "/tables" },
         // ],
@@ -51,9 +51,25 @@ const menuGroups = [
           { label: "Server Install", route: "/serverinstall" },
           { label: "Servers Table", route: "/servertable" },
           { label: "Servers Test", route: "/servertest" },
+          { label: "Servers Project Stats", route: "/serverprojectstats" },
         ],
       },
 
+      {
+        icon: (
+          <Link2 />
+        ),
+        label: "Domains",
+        route: "#",
+        children: [
+          { label: "Domains", route: "/domains" },
+          { label: "Domains Provider", route: "/domainsprovider" },
+
+        ],
+      },
+
+
+      
       {
         icon: (
           <Tickets  />

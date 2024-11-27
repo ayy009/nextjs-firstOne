@@ -6,9 +6,9 @@ const columns = [
   { name: "Ptr", uid: "ptr", sortable: true },
   { name: "Vmta", uid: "vmta", sortable: true },
   { name: "Tag", uid: "tag", sortable: true },
-  { name: "Ip version", uid: "ipVersion", sortable: true },
+  { name: "Ip version", uid: "ip_version", sortable: true },
   { name: "Type", uid: "type", sortable: true },
-  { name: "Server status", uid: "serverStatus", sortable: true },
+  { name: "Server status", uid: "status_server", sortable: true },
   { name: "Status", uid: "status", sortable: true },
 ];
 
@@ -119,9 +119,9 @@ const columns = [
     "ptr",             // PTR
     "vmta",            // VMTA
     "tag",             // TAG
-    "ipVersion",       // IP VERSION
+    "ip_version",       // IP VERSION
     "type",            // TYPE
-    "serverStatus",    // SERVER STATUS
+    "status_server",    // SERVER STATUS
     "status",          // STATUS
     
   ];

@@ -29,6 +29,7 @@ export async function updateSession() {
 export async function deleteSession() {
   // Deleting the 'session' cookie
   cookies().delete('Authorization');
+  cookies().delete('email')
 
   // Return a success message
   return { message: 'Session deleted successfully' };
