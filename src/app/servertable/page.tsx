@@ -20,6 +20,8 @@ interface Props {
 
 export default async function TableServers({ searchParams }: Props) {
 
+  const selectedItems = searchParams.selectedItems;
+
   const handleDeleteServers=async ()=>{
     "use server"
 
@@ -104,7 +106,7 @@ export default async function TableServers({ searchParams }: Props) {
       ),
   
       actions: (
-        <ActionsServerTable user={element} serverproviders={serverproviders}/>     
+        <ActionsServerTable user={element} serverproviders={serverproviders} />     
       ),
     };
   });
@@ -115,7 +117,7 @@ export default async function TableServers({ searchParams }: Props) {
   return (
     <div>
 
-    <GroupButton data ={serverproviders} handleDeleteServers={handleDeleteServers}/>
+    <GroupButton data ={serverproviders} handleDeleteServers={handleDeleteServers} selectedItems={selectedItems}/>
 
     <TableBase  columns={columns} serverproviders ={serverproviders} dataTable={serversAfterStyling} statusOptions={statusOptions}  INITIAL_VISIBLE_COLUMNS ={INITIAL_VISIBLE_COLUMNS} tableName={tableName}/>
 

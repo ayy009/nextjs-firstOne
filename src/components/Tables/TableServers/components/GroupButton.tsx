@@ -12,10 +12,12 @@ import {
   ModalFooter 
 } from "@nextui-org/react";
 import toast, { Toaster } from 'react-hot-toast';
+import { deleteServers } from '@/actions/ServersActions/ServerTableActions';
 
-function GroupButton({data, handleDeleteServers}: {
+function GroupButton({data,selectedItems}: {
   data: any[], 
-  handleDeleteServers: () => void
+  handleDeleteServers: () => void,
+  selectedItems:any
 }) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [deletionInProgress, setDeletionInProgress] = useState(false);
@@ -58,6 +60,19 @@ function GroupButton({data, handleDeleteServers}: {
       setDeletionInProgress(false);
     }
   };
+
+  const handleDeleteServers=async ()=>{
+
+        let arr: number[] = [];
+        if (typeof selectedItems === "string") {
+          arr = selectedItems.split(",").map(Number);
+        } else if (Array.isArray(selectedItems)) {
+          // If it's already an array, convert each item to a number
+          arr = selectedItems.map(Number).flat();
+        }
+       
+        const data = await deleteServers(arr)
+  }
 
   return (
     <div className='lg:flex justify-between'>

@@ -37,9 +37,6 @@ const menuGroups = [
         ),
         label: "Server Interfaces",
         route: "/serverinterfaces",
-        // children: [
-        //   { label: "Tables", route: "/tables" },
-        // ],
       },
       {
         icon: (

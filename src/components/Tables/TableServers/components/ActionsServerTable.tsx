@@ -52,7 +52,10 @@ interface ServerProvider {
   name: string
 }
 
-function ActionsServerTable({ user, serverproviders }: { user: ServerData; serverproviders: ServerProvider[] }) {
+function ActionsServerTable({ user, serverproviders }: { user: ServerData; serverproviders: ServerProvider[];}) {
+
+
+
   const { isOpen, onOpen, onOpenChange } = useDisclosure()
   const handleDelete = (id:any) => {
     console.log(id)
@@ -60,6 +63,8 @@ function ActionsServerTable({ user, serverproviders }: { user: ServerData; serve
       deleteServers(id)
     }
   }
+
+  
 
   return (
     <div>

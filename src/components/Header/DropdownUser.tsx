@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import ClickOutside from "@/components/ClickOutside";
@@ -8,6 +8,20 @@ import { deleteSession } from "@/lib/session";
 
 const DropdownUser = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
+
+  const [email, setEmail] = useState<string | null>(null);
+
+  useEffect(() => {
+    // Retrieve the email from the cookies
+    const cookies = document.cookie
+      .split('; ')
+      .find((row) => row.startsWith('email='));
+
+    if (cookies) {
+      const emailValue = cookies.split('=')[1];
+      setEmail(decodeURIComponent(emailValue));
+    }
+  }, []);
   //function
 
 const handleSessionDelete = async () => {
@@ -88,7 +102,7 @@ const handleSessionDelete = async () => {
                 Jhon Smith
               </span>
               <span className="block font-medium text-dark-5 dark:text-dark-6">
-                jonson@nextadmin.com
+              {email || 'No email found'}
               </span>
             </span>
           </div>

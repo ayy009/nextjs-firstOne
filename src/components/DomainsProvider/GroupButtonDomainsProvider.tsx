@@ -4,6 +4,8 @@ import { Button, ButtonGroup, Modal, ModalContent, ModalHeader, ModalBody, Modal
 import { Plus, SquareArrowOutUpRight, Trash2, X } from 'lucide-react'
 import React, { useState } from 'react'
 import toast from 'react-hot-toast'
+import { deleteDomainsProvider } from '@/actions/DomainsActions/DomainsProviderActions';
+
 
 interface Project {
   id: string;
@@ -12,7 +14,8 @@ interface Project {
 
 interface GroupButtonDomainsProviderProps {
   projects: any;
-  deleteDomainsProviderButton:any
+  selectedItems:any
+ 
 }
 
 interface ProviderFormData {
@@ -27,9 +30,23 @@ interface ProviderFormData {
   project: string;
 }
 
-function GroupButtonDomainsProvider({ projects, deleteDomainsProviderButton }: GroupButtonDomainsProviderProps) {
+function GroupButtonDomainsProvider({ projects,selectedItems }: GroupButtonDomainsProviderProps) {
   const { isOpen: isAddOpen, onOpen: onAddOpen, onClose: onAddClose } = useDisclosure();
   const { isOpen: isDeleteOpen, onOpen: onDeleteOpen, onClose: onDeleteClose } = useDisclosure();
+
+  const deleteDomainsProviderButton=async ()=>{
+
+
+        let arr: number[] = [];
+        if (typeof selectedItems === "string") {
+          arr = selectedItems.split(",").map(Number);
+        } else if (Array.isArray(selectedItems)) {
+          // If it's already an array, convert each item to a number
+          arr = selectedItems.map(Number).flat();
+        }
+       
+        const data = await deleteDomainsProvider(arr)
+  }
   
   const [formData, setFormData] = useState<ProviderFormData>({
     provider: 'Namecheap',

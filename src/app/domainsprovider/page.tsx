@@ -4,7 +4,6 @@ import { columns, INITIAL_VISIBLE_COLUMNS, statusOptions, tableName } from './da
 import { getUserApiKey } from '@/lib/ApiKey';
 import axios from 'axios';
 import GroupButtonDomainsProvider from '@/components/DomainsProvider/GroupButtonDomainsProvider';
-import { deleteDomainsProvider } from '@/actions/DomainsActions/DomainsProviderActions';
 import { Chip } from '@nextui-org/react';
 import ActionsDomainsProviderTable from '@/components/DomainsProvider/ActionsDomainsProviderTable';
 
@@ -56,26 +55,28 @@ async function page({ searchParams }: Props) {
 
 
   //-------------------------------------------------------func delete domains provider
-  const deleteDomainsProviderButton=async ()=>{
-    "use server"
+
+  const selectedItems = searchParams.selectedItems;
+  // const deleteDomainsProviderButton=async ()=>{
+  //   "use server"
 
     
-    const selectedItems = searchParams.selectedItems;
+  //   const selectedItems = searchParams.selectedItems;
 
-        let arr: number[] = [];
-        if (typeof selectedItems === "string") {
-          arr = selectedItems.split(",").map(Number);
-        } else if (Array.isArray(selectedItems)) {
-          // If it's already an array, convert each item to a number
-          arr = selectedItems.map(Number).flat();
-        }
+  //       let arr: number[] = [];
+  //       if (typeof selectedItems === "string") {
+  //         arr = selectedItems.split(",").map(Number);
+  //       } else if (Array.isArray(selectedItems)) {
+  //         // If it's already an array, convert each item to a number
+  //         arr = selectedItems.map(Number).flat();
+  //       }
        
-        const data = await deleteDomainsProvider(arr)
-  }
+  //       const data = await deleteDomainsProvider(arr)
+  // }
 
   return (
     <div className='w-full'>
-    <GroupButtonDomainsProvider projects={projects} deleteDomainsProviderButton={deleteDomainsProviderButton}/>
+    <GroupButtonDomainsProvider projects={projects} selectedItems={selectedItems}/>
     <TableBase columns={columns} dataTable={domainProviderAfterStayling} statusOptions={statusOptions}  INITIAL_VISIBLE_COLUMNS ={INITIAL_VISIBLE_COLUMNS} tableName={tableName}/>
     </div>
   )
